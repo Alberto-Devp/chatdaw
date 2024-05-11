@@ -7,6 +7,8 @@ if (!username) {
     username = "Usuario Anónimo";
 }
 
+const userId = generateUserId();
+
 const socket = new WebSocket('wss://chatdaw.onrender.com/');
 
 socket.addEventListener('open', () => {
@@ -15,7 +17,7 @@ socket.addEventListener('open', () => {
 
 socket.addEventListener('message', event => {
     const receivedMessage = JSON.parse(event.data);
-    const messageText = (receivedMessage.username !== username) ? `${receivedMessage.username}: ${receivedMessage.message}` : `Tú: ${receivedMessage.message}`;
+    const messageText = (receivedMessage.userId !== userId) ? `${receivedMessage.username}: ${receivedMessage.message}` : `Tú: ${receivedMessage.message}`;
     appendMessage(messageText);
 });
 
@@ -28,7 +30,7 @@ sendButton.addEventListener('click', () => {
 });
 
 function sendMessage(message) {
-    const messageToSend = JSON.stringify({ username, message });
+    const messageToSend = JSON.stringify({ username, message, userId });
     socket.send(messageToSend);
 }
 
@@ -37,6 +39,11 @@ function appendMessage(message) {
     messageElement.innerText = message;
     messageContainer.appendChild(messageElement);
 }
+
+function generateUserId() {
+    return Math.random().toString(36).substr(2, 9);
+}
+
 
 
 

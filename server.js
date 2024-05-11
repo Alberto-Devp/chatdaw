@@ -13,14 +13,15 @@ wss.on('connection', ws => {
 
     ws.on('message', message => {
         const parsedMessage = JSON.parse(message);
-        console.log(`Mensaje recibido de ${parsedMessage.username}: ${parsedMessage.message}`);
+        console.log(`Mensaje recibido de ${parsedMessage.username} (${parsedMessage.userId}): ${parsedMessage.message}`);
         wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify(parsedMessage)); // Convertir el mensaje a JSON antes de enviarlo
+                client.send(JSON.stringify(parsedMessage));
             }
         });
     });
 });
+
 
 
 
