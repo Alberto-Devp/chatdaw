@@ -16,11 +16,12 @@ wss.on('connection', ws => {
         console.log(`Mensaje recibido de ${parsedMessage.username}: ${parsedMessage.message}`);
         wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
-                client.send(message);
+                client.send(JSON.stringify(parsedMessage)); // Convertir el mensaje a JSON antes de enviarlo
             }
         });
     });
 });
+
 
 
 const PORT = 3000;
