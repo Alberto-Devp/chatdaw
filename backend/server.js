@@ -1,11 +1,14 @@
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
-const path = require('path');
+const chatRoutes = require('./routes/chatRoutes'); // Importa las rutas del chat
 
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
+
+// Configura las rutas del chat
+app.use('/', chatRoutes);
 
 // Manejar conexiones WebSocket
 wss.on('connection', ws => {
@@ -23,9 +26,7 @@ wss.on('connection', ws => {
     });
 });
 
-// Servir archivos estáticos
-app.use(express.static(path.join(__dirname, 'frontend')));
-
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Servidor WebSocket en ejecución en el puerto ${PORT}.`));
+
 
