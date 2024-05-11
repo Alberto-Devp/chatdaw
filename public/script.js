@@ -2,6 +2,11 @@ const messageContainer = document.getElementById('message-container');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
 
+let username = prompt("Por favor, ingresa tu nombre:");
+if (!username) {
+    username = "Usuario Anónimo";
+}
+
 const socket = new WebSocket('ws://localhost:3000');
 
 socket.addEventListener('message', event => {
@@ -18,7 +23,7 @@ sendButton.addEventListener('click', () => {
 });
 
 function sendMessage(message) {
-    socket.send(message);
+    socket.send(`${username}: ${message}`);
     appendMessage(`Tú: ${message}`);
 }
 
@@ -27,4 +32,5 @@ function appendMessage(message) {
     messageElement.innerText = message;
     messageContainer.appendChild(messageElement);
 }
+
 
