@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Definir rutas para el chat
 router.get('/', (req, res) => {
-    res.send('Bienvenido al chat.');
+    res.sendFile('index.html', { root: './public' });
 });
 
 module.exports = router;
