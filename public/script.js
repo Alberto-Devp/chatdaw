@@ -27,12 +27,12 @@ sendButton.addEventListener('click', () => {
 });
 
 function sendMessage(message) {
-    const messageToSend = `${username}: ${message}`;
-    if (typeof messageToSend === 'string' && messageToSend.trim().length > 0 && socket.readyState === WebSocket.OPEN) {
+    const messageToSend = JSON.stringify({ username, message });
+    if (socket.readyState === WebSocket.OPEN) {
         socket.send(messageToSend);
-        appendMessage(`Tú: ${message}`);
     }
 }
+
 
 
 function appendMessage(message) {
