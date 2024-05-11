@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
@@ -22,5 +23,9 @@ wss.on('connection', ws => {
     });
 });
 
+// Servir archivos estáticos
+app.use(express.static(path.join(__dirname, 'frontend')));
+
 const PORT = 3000;
 server.listen(PORT, () => console.log(`Servidor WebSocket en ejecución en el puerto ${PORT}.`));
+
