@@ -1,53 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat con amigos</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Chat</h1>
-  <input type="text" id="messageInput" placeholder="Escribe tu mensaje...">
-  <button onclick="sendMessage()">Enviar</button>
-  <ul id="messages"></ul>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
-  <script>
-    const ws = new WebSocket(`ws://${window.location.host}`);
-
-    // Función para cifrar un mensaje
-    function encryptMessage(message) {
-      return CryptoJS.AES.encrypt(message, 'supersecretkey').toString();
-    }
-
-    // Función para descifrar un mensaje
-    function decryptMessage(encryptedMessage) {
-      const bytes  = CryptoJS.AES.decrypt(encryptedMessage, 'supersecretkey');
-      return bytes.toString(CryptoJS.enc.Utf8);
-    }
-
-    ws.onmessage = event => {
-      console.log('Mensaje cifrado recibido:', event.data);
-      const decryptedMessage = decryptMessage(event.data);
-      console.log('Mensaje descifrado:', decryptedMessage);
-      
-      const messages = document.getElementById('messages');
-      const li = document.createElement('li');
-      li.textContent = decryptedMessage;
-      messages.appendChild(li);
-    };
-
-    function sendMessage() {
-      const messageInput = document.getElementById('messageInput');
-      const message = messageInput.value.trim();
-      if (message !== '') {
-        const encryptedMessage = encryptMessage(message);
-        console.log('Mensaje cifrado enviado:', encryptedMessage);
-        ws.send(encryptedMessage);
-        messageInput.value = '';
-      }
-    }
-  </script>
+    <div id="chat-container">
+        <div id="message-container"></div>
+        <input type="text" id="message-input" placeholder="Escribe tu mensaje...">
+        <button id="send-button">Enviar</button>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
-
