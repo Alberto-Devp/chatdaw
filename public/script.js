@@ -23,7 +23,6 @@ sendButton.addEventListener('click', () => {
     const message = messageInput.value;
     if (message && socket.readyState === WebSocket.OPEN) {
         sendMessage(message);
-        appendMessage(`Tú: ${message}`);
         messageInput.value = '';
     }
 });
