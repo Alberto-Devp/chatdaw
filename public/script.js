@@ -14,8 +14,8 @@ socket.addEventListener('open', () => {
 });
 
 socket.addEventListener('message', event => {
-    const message = event.data;
-    appendMessage(message);
+    const message = JSON.parse(event.data);
+    appendMessage(`${message.username}: ${message.message}`);
 });
 
 sendButton.addEventListener('click', () => {
@@ -28,12 +28,9 @@ sendButton.addEventListener('click', () => {
 
 function sendMessage(message) {
     const messageToSend = JSON.stringify({ username, message });
-    if (socket.readyState === WebSocket.OPEN) {
-        socket.send(messageToSend);
-    }
+    socket.send(messageToSend);
+    appendMessage(`Tú: ${message}`);
 }
-
-
 
 function appendMessage(message) {
     const messageElement = document.createElement('div');
