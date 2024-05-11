@@ -27,9 +27,12 @@
     }
 
     ws.onmessage = event => {
+      console.log('Mensaje cifrado recibido:', event.data);
+      const decryptedMessage = decryptMessage(event.data);
+      console.log('Mensaje descifrado:', decryptedMessage);
+      
       const messages = document.getElementById('messages');
       const li = document.createElement('li');
-      const decryptedMessage = decryptMessage(event.data);
       li.textContent = decryptedMessage;
       messages.appendChild(li);
     };
@@ -39,6 +42,7 @@
       const message = messageInput.value.trim();
       if (message !== '') {
         const encryptedMessage = encryptMessage(message);
+        console.log('Mensaje cifrado enviado:', encryptedMessage);
         ws.send(encryptedMessage);
         messageInput.value = '';
       }
@@ -46,3 +50,4 @@
   </script>
 </body>
 </html>
+
