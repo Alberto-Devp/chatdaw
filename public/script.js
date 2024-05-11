@@ -9,6 +9,10 @@ if (!username) {
 
 const socket = new WebSocket('wss://chatdaw.onrender.com:3000/');
 
+socket.addEventListener('open', () => {
+    console.log('Conexión WebSocket establecida.');
+});
+
 socket.addEventListener('message', event => {
     const message = event.data;
     appendMessage(message);
@@ -16,7 +20,7 @@ socket.addEventListener('message', event => {
 
 sendButton.addEventListener('click', () => {
     const message = messageInput.value;
-    if (message) {
+    if (message && socket.readyState === WebSocket.OPEN) {
         sendMessage(message);
         messageInput.value = '';
     }
@@ -32,5 +36,6 @@ function appendMessage(message) {
     messageElement.innerText = message;
     messageContainer.appendChild(messageElement);
 }
+
 
 
