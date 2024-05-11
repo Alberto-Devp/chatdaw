@@ -15,15 +15,15 @@ socket.addEventListener('open', () => {
 
 socket.addEventListener('message', event => {
     const receivedMessage = JSON.parse(event.data);
-    if (receivedMessage.username !== username) {
-        appendMessage(`${receivedMessage.username}: ${receivedMessage.message}`);
-    }
+    const messageText = (receivedMessage.username !== username) ? `${receivedMessage.username}: ${receivedMessage.message}` : `Tú: ${receivedMessage.message}`;
+    appendMessage(messageText);
 });
 
 sendButton.addEventListener('click', () => {
     const message = messageInput.value;
     if (message && socket.readyState === WebSocket.OPEN) {
         sendMessage(message);
+        appendMessage(`Tú: ${message}`);
         messageInput.value = '';
     }
 });
@@ -38,6 +38,7 @@ function appendMessage(message) {
     messageElement.innerText = message;
     messageContainer.appendChild(messageElement);
 }
+
 
 
 
