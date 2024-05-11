@@ -7,7 +7,7 @@ if (!username) {
     username = "Usuario Anónimo";
 }
 
-const socket = new WebSocket('wss://chatdaw.onrender.com:3000/');
+const socket = new WebSocket('wss://chatdaw.onrender.com/');
 
 socket.addEventListener('open', () => {
     console.log('Conexión WebSocket establecida.');
