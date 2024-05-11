@@ -27,9 +27,13 @@ sendButton.addEventListener('click', () => {
 });
 
 function sendMessage(message) {
-    socket.send(`${username}: ${message}`);
-    appendMessage(`Tú: ${message}`);
+    const messageToSend = `${username}: ${message}`;
+    if (typeof messageToSend === 'string' && messageToSend.trim().length > 0 && socket.readyState === WebSocket.OPEN) {
+        socket.send(messageToSend);
+        appendMessage(`Tú: ${message}`);
+    }
 }
+
 
 function appendMessage(message) {
     const messageElement = document.createElement('div');
