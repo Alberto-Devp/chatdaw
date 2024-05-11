@@ -14,22 +14,23 @@ socket.addEventListener('open', () => {
 });
 
 socket.addEventListener('message', event => {
-    const message = JSON.parse(event.data);
-    appendMessage(`${message.username}: ${message.message}`);
-});
-
-socket.addEventListener('message', event => {
     const receivedMessage = JSON.parse(event.data);
-    if (receivedMessage.username !== username) { // Verificar si el mensaje recibido no proviene del usuario actual
+    if (receivedMessage.username !== username) {
         appendMessage(`${receivedMessage.username}: ${receivedMessage.message}`);
     }
 });
 
+sendButton.addEventListener('click', () => {
+    const message = messageInput.value;
+    if (message && socket.readyState === WebSocket.OPEN) {
+        sendMessage(message);
+        messageInput.value = '';
+    }
+});
 
 function sendMessage(message) {
     const messageToSend = JSON.stringify({ username, message });
     socket.send(messageToSend);
-    appendMessage(`Tú: ${message}`);
 }
 
 function appendMessage(message) {
@@ -37,6 +38,7 @@ function appendMessage(message) {
     messageElement.innerText = message;
     messageContainer.appendChild(messageElement);
 }
+
 
 
 
