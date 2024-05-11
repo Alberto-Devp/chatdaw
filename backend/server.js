@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
-const chatRoutes = require('./routes/chatRoutes.js'); // Importa las rutas del chat
+const chatRoutes = require('../routes/chatRoutes.js'); // Importa las rutas del chat
 
 const app = express();
 const server = http.createServer(app);
